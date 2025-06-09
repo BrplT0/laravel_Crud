@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.*')" class="text-white hover:text-white">
                         {{ __('Students') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('trashed.index')" :active="request()->routeIs('trashed.index')" class="text-white hover:text-white">
+                        {{ __('Trashed Items') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.*')" class="text-white hover:text-white">
                         {{ __('Contact') }}
                     </x-nav-link>

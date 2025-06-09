@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\City;
+use App\Models\Student;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,9 +23,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call([
-            CitiesTableSeeder::class,
-            StudentsTableSeeder::class,
-        ]);
+        // Create 10 cities
+        City::factory(10)->create();
+
+        // Create 50 students
+        Student::factory(50)->create();
     }
 }

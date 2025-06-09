@@ -8,7 +8,7 @@
 
     <div>
         <label for="name" class="block text-sm font-medium text-white">Name</label>
-        <input type="text" name="name" id="name" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" value="{{ old('name', $student?->name) }}" required>
+        <input type="text" name="name" id="name" class="mt-1 block w-full bg-gray-700 border-gray-600 text-blue-300 placeholder-gray-400 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" value="{{ old('name', $student?->name) }}" required autofocus>
         @error('name')
             <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
         @enderror
@@ -16,7 +16,7 @@
 
     <div>
         <label for="email" class="block text-sm font-medium text-white">Email</label>
-        <input type="email" name="email" id="email" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" value="{{ old('email', $student?->email) }}" required>
+        <input type="email" name="email" id="email" class="mt-1 block w-full bg-gray-700 border-gray-600 text-blue-300 placeholder-gray-400 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" value="{{ old('email', $student?->email) }}" required>
         @error('email')
             <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
         @enderror
@@ -24,10 +24,10 @@
 
     <div>
         <label for="city_id" class="block text-sm font-medium text-white">City</label>
-        <select name="city_id" id="city_id" class="mt-1 block w-full bg-gray-700 border-gray-600 text-white rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
-            <option value="">Select a city</option>
+        <select name="city_id" id="city_id" class="mt-1 block w-full bg-gray-700 border-gray-600 text-blue-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+            <option value="" class="bg-gray-700 text-blue-300">Select a city</option>
             @foreach($cities as $city)
-                <option value="{{ $city->id }}" {{ old('city_id', $student?->city_id) == $city->id ? 'selected' : '' }}>
+                <option value="{{ $city->id }}" class="bg-gray-700 text-blue-300" {{ old('city_id', $student?->city_id) == $city->id ? 'selected' : '' }}>
                     {{ $city->name }}
                 </option>
             @endforeach
