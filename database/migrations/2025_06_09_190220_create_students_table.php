@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->foreignId('city_id')->constrained()->onDelete('cascade');
-            $table->softDeletes(); // soft delete eklendi
+            $table->softDeletes(); // Added soft delete
             $table->timestamps();
         });
     }

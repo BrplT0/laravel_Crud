@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\City;
+use App\Http\Requests\StudentRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class StudentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('city')->paginate(10); // şehirle birlikte getir, 10'lu sayfala
+        $students = Student::with('city')->latest()->paginate(10);
         return view('students.index', compact('students'));
     }
 
@@ -26,7 +33,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $cities = City::all();
+        return view('students.create', compact('cities'));
     }
 
     /**
@@ -35,9 +43,10 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
-        //
+        Student::create($request->validated());
+        return redirect()->route('students.index')->with('success', 'Student created successfully.');
     }
 
     /**
@@ -46,9 +55,9 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Student $student)
     {
-        //
+        return view('students.show', compact('student'));
     }
 
     /**
@@ -57,9 +66,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Student $student)
     {
-        //
+        $cities = City::all();
+        return view('students.edit', compact('student', 'cities'));
     }
 
     /**
@@ -69,9 +79,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StudentRequest $request, Student $student)
     {
-        //
+        $student->update($request->validated());
+        return redirect()->route('students.index')->with('success', 'Student updated successfully.');
     }
 
     /**
@@ -80,8 +91,16 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Student $student)
     {
-        //
+        $student->delete();
+        return redirect()->route('students.index')->with('success', 'Student deleted successfully.');
+    }
+
+    public function exportPdf()
+    {
+        $students = Student::with('city')->get();
+        $pdf = PDF::loadView('students.pdf', compact('students'));
+        return $pdf->download('students.pdf');
     }
 }

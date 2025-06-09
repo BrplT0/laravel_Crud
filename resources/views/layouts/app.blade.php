@@ -14,13 +14,13 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+    <body class="font-sans antialiased bg-gray-900">
+        <div class="min-h-screen bg-gray-900">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
+                <header class="bg-gray-800 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -29,7 +29,17 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="py-12">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        @if (session('success'))
+                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                                <span class="block sm:inline">{{ session('success') }}</span>
+                            </div>
+                        @endif
+
+                        {{ $slot }}
+                    </div>
+                </div>
             </main>
         </div>
     </body>
